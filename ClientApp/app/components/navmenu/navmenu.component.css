@@ -1,0 +1,12 @@
+.navbar-extended-background {
+    /*z-index: -1;*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 112px;
+    background-color: #5C6BC0;
+}
+
+.bg-dark {
+    background-color: #36459b !important;
+}

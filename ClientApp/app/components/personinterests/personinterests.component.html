@@ -1,0 +1,21 @@
+<ul>
+    <li *ngFor="let personInterest of personInterests" class="listitem">
+        {{personInterest.interest.name}}
+        <button (click)="deleteInterestFromPerson(personInterest.interest)" class="btn btn-outline-danger pull-right"><i class="fa fa-trash"></i></button>
+    </li>
+    <li (click)="openAddInterestModal(interestsModalTemplate)" class="listitem"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Voeg interrese toe</li>
+</ul>
+
+<ng-template #interestsModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Interreses</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="interestsModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div>
+        <ul>
+            <li *ngFor="let interest of interests" class="listitem" (click)="addInterestToPerson(interest)">{{interest.name}}</li>
+        </ul>
+    </div>
+</ng-template>

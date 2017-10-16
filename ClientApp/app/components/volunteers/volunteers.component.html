@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-0">Vrijwilligers</h2>
+                <p>
+                    {{volunteers.length}} Vrijwilligers
+                    <button type="button" class="m-2 btn btn-link p-0" (click)="openCreateModal(formModalTemplate)">Voeg Vrijwilliger toe</button>
+                </p>
+            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Email</th>
+                        <th>Telefoon</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let person of volunteers">
+                        <td>{{ person.name }}</td>
+                        <td>{{ person.email }}</td>
+                        <td>{{ person.phoneNumber }}</td>
+
+                        <td>
+                            <button (click)="openDetailsModal(formModalTemplate, person)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div bsModal #formModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <form [formGroup]="personForm">
+        <div class="card modal-dialog" [ngClass]="{'modal-lg': !isCreating}" role="document">
+            <div class="row m-0">
+                <div class="col-12 p-0" [ngClass]="{'col-sm-6': !isCreating}">
+                    <div class="modal-header">
+                        <h4 class="m-0 align-bottom">Details Vrijwilliger</h4>
+                    </div>
+                    <div class="modal-body pb-0">
+                        <div class="input-group mb-3">
+                            <div class="input-group-addon"><i class="fa fa-user mx-auto" aria-hidden="true"></i></div>
+                            <input type="text" class="form-control" formControlName="name" placeholder="Volledige Naam" id="inputName">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-addon"><i class="fa fa-envelope mx-auto" aria-hidden="true"></i></div>
+                            <input type="email" class="form-control" formControlName="email" placeholder="Email">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-addon"><i class="fa fa-phone mx-auto" aria-hidden="true"></i></div>
+                            <input type="number" class="form-control" formControlName="phoneNumber" placeholder="Telefoon">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon">Duwt rolstoel</span>
+                            <select id="inputStateWheelchair" formControlName="wheelChair" class="form-control">
+                                <option selected value=false>Nee</option>
+                                <option value=true>Ja</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon ">Werkt met dementerend</span>
+                            <select id="inputStateDementing" formControlName="dementing" class="form-control">
+                                <option selected value=false>Nee</option>
+                                <option value=true>Ja</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-0" *ngIf="!isCreating">
+                    <div class="modal-header">
+                        <h4 class="m-0 align-bottom">Interreses</h4>
+                    </div>
+                    <div class="<!--modal-body-->">
+                        <personinterests></personinterests>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div *ngIf="errorMessage" class="p-3 mb-2 bg-danger text-white">
+                    Er is iets fout gegaan!
+                    {{errorMessage}}
+                </div>
+                <button type="button" *ngIf="!isCreating" class="m-2 btn btn-link p-0" (click)="deletePerson(deletePromptModalTemplate, selectedVolunteer)">{{selectedVolunteer.name}} verwijderen</button>
+                <button type="button" (click)="formModal.hide()" class="btn btn-default">Sluiten</button>
+                <button type="submit" (click)="formSubmit()" class="btn btn-primary">{{isCreating ? "Aanmaken" : "Wijzigingen Opslaan"}}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<ng-template #deletePromptModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{deleteModalContent.title}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{deleteModalContent.bodyText}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="deleteModalContent.okAction()">Ja</button>
+        <button type="button" class="btn btn-primary" (click)="deleteModal.hide()">Nee</button>
+    </div>
+</ng-template>
