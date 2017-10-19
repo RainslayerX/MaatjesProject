@@ -12,6 +12,7 @@ import { ElderlyPersonsComponent } from './components/elderlypersons/elderlypers
 import { PersonInterestsComponent } from "./components/personinterests/personinterests.component";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { VolunteersComponent } from "./components/volunteers/volunteers.component";
+import { MatcherComponent } from "./components/matcher/matcher.component";
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { VolunteersComponent } from "./components/volunteers/volunteers.componen
         HomeComponent,
         ElderlyPersonsComponent,
         PersonInterestsComponent,
-        VolunteersComponent
+        VolunteersComponent,
+        MatcherComponent
     ],
     imports: [
         CommonModule,
@@ -32,6 +34,7 @@ import { VolunteersComponent } from "./components/volunteers/volunteers.componen
             { path: 'home', component: HomeComponent },
             { path: 'elderlypersons', component: ElderlyPersonsComponent },
             { path: 'volunteers', component: VolunteersComponent },
+            { path: 'matcher', component: MatcherComponent },
             { path: '**', redirectTo: 'home' }
         ]),
         ModalModule.forRoot()

@@ -1,4 +1,7 @@
 ﻿using MaatjesProjectMVC.Models.MemberViewModels;
+using MaatjesProjectV2.Models.Matches;
+using MaatjesProjectV2.Models.MemberViewModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MaatjesProjectV2.Data
 {
-    public class ProjectContext : DbContext
+    public class ProjectContext : IdentityDbContext<ApplicationUser>
     {
         public ProjectContext(DbContextOptions<ProjectContext> options)
             : base(options)
@@ -15,16 +18,16 @@ namespace MaatjesProjectV2.Data
 
         public DbSet<Person> People { get; set; }
         public DbSet<Volunteer> Volunteers { get; set; }
-        public DbSet<ElderlyPerson> ElderlyPersons { get; set; }
+        public DbSet<Elderly> ElderlyPeople { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<PersonInterest> PersonInterests { get; set; }
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Volunteer>();
-            modelBuilder.Entity<ElderlyPerson>();
 
             modelBuilder.Entity<PersonInterest>()
             .HasKey(t => new { t.PersonId, t.InterestId });

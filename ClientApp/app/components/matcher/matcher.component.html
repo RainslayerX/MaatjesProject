@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-0">Matcher</h2>
+                <p>
+                    {{matches.length}} Actieve Matches
+                    <button type="button" class="m-2 btn btn-link p-0" (click)="openCreateModal()">Persoon Matchen</button>
+                </p>
+            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Oudere</th>
+                        <th>Vrijwilleger</th>
+                        <th>Gematched sinds</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let match of matches">
+                        <td>{{ match.elderly.name }}</td>
+                        <td>{{ match.volunteer.name }}</td>
+                        <td>{{ match.dateCreated | date: 'dd/MM/yyyy'}}</td>
+
+                        <td>
+                            <button (click)="openDetailsModal(person)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div bsModal #formModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="card modal-dialog" role="document">
+        <div class="row m-0">
+            <div class="col-12 p-0">
+                <div class="modal-header">
+                    <h4 class="m-0 align-bottom">Persoon Matchen</h4>
+                    Stap {{wizardProgress+1}} van 4
+                </div>
+                <div *ngIf="wizardProgress == 0">
+                    <div class="modal-body">
+                        <p class="text-center">Oudere of vrijwilleger matchen?</p>
+                        <div class="input-group mb-3">
+                            <select id="inputStateDementing" class="form-control" [(ngModel)]="targetType">
+                                <option>Oudere</option>
+                                <option>Vrijwilleger</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="wizardProgress == 1">
+
+                    <div class="modal-body">
+                        <p class="text-center">Selecteer een {{targetType}}</p>
+                        <div class="input-group">
+                            <div class="input-group-addon">Filter</div>
+                            <input type="text" class="form-control" placeholder="Naam, afdeling, stad...">
+                        </div>
+                    </div>
+                    <ul>
+                        <li class="listitem" *ngFor="let person of persons" (click)="targetPerson = person">
+                            {{targetPerson == person ? 'Geselecteerd - ' : ''}}{{ person.name }}
+                        </li>
+                    </ul>
+                </div>
+                <div *ngIf="wizardProgress == 2">
+
+                    <div class="modal-body">
+                        <p class="text-center">Selecteer een {{targetType == 'Oudere' ? 'Vrijwilleger' : 'Oudere'}}</p>
+                        <div class="input-group">
+                            <div class="input-group-addon">Filter</div>
+                            <input type="text" class="form-control" placeholder="Naam, afdeling, stad...">
+                        </div>
+                    </div>
+                    <ul>
+                        <li class="listitem" *ngFor="let person of personMatches" (click)="targetMatch = person">
+                            {{targetMatch == person ? 'Geselecteerd - ' : ''}}{{ person.person.name }}  {{person.percent}}
+                        </li>
+                    </ul>
+                </div>
+
+                <div *ngIf="wizardProgress == 3">
+                    <div class="modal-body pb-0">
+                        <p>{{ targetPerson.name }} met {{ targetMatch.person.name }} matchen?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div *ngIf="errorMessage" class="p-3 mb-2 bg-danger text-white">
+                Er is iets fout gegaan!
+                {{errorMessage}}
+            </div>
+            <button type="button" (click)="formModal.hide(); wizardProgress = 0;" class="btn btn-default">Sluiten</button>
+            <button class="btn btn-primary" (click)="goNext()">{{wizardProgress == 3 ? 'Voltooien' : 'Volgende'}}</button>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #deletePromptModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{deleteModalContent.title}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{deleteModalContent.bodyText}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="deleteModalContent.okAction()">Ja</button>
+        <button type="button" class="btn btn-primary" (click)="deleteModal.hide()">Nee</button>
+    </div>
+</ng-template>

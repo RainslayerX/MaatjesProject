@@ -1,10 +1,8 @@
 <div class="row">
-    <div class="col-12">
-        <div class="card card-top">
-            <div class="card-header">
-                <h2 class="m-0">Overzicht</h2>
-            </div>
-            <div class="card-body">
+    <div class="col">
+        <div class="card-top">
+            <div class="card-header bg-transparent mb-3 border-0">
+                <h2 class="text-white">Overzicht</h2>
             </div>
         </div>
     </div>
@@ -15,15 +13,31 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="">Beschikbare Personen</h4>
-                <select class="custom-select">
-                    <option selected>Iedereen</option>
-                    <option>Ouderen</option>
-                    <option>Vrijwillegers</option>
+                <select class="custom-select" (change)="updateAvailablePersons($event.target.value)">
+                    <option selected value=0>Iedereen</option>
+                    <option value=1>Ouderen</option>
+                    <option value=2>Vrijwillegers</option>
                 </select>
             </div>
-            <div class="card-body">
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let person of availablePersons">
+                        <td>{{ person.name }}</td>
 
-            </div>
+                        <td>
+                            <button (click)="openDetailsModal(formModalTemplate, person)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -36,8 +50,29 @@
                     <option>Laatste Opmerking</option>
                 </select>
             </div>
-            <div class="card-body">
-            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Oudere</th>
+                        <th>Vrijwilleger</th>
+                        <th>Gematched sinds</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let match of matches">
+                        <td>{{ match.elderly.name }}</td>
+                        <td>{{ match.volunteer.name }}</td>
+                        <td>{{ match.dateCreated | date: 'dd/MM/yyyy'}}</td>
+
+                        <td>
+                            <button (click)="openDetailsModal(person)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

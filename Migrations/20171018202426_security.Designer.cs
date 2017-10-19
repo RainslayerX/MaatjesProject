@@ -12,8 +12,8 @@ using System;
 namespace MaatjesProjectV2.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20171007110353_init")]
-    partial class init
+    [Migration("20171018202426_security")]
+    partial class security
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,49 @@ namespace MaatjesProjectV2.Migrations
                     b.ToTable("PersonInterests");
                 });
 
-            modelBuilder.Entity("MaatjesProjectMVC.Models.MemberViewModels.ElderlyPerson", b =>
+            modelBuilder.Entity("MaatjesProjectV2.Models.Matches.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<int>("MatchId");
+
+                    b.Property<int?>("OwnerPersonId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("MatchId");
+
+                    b.HasIndex("OwnerPersonId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("MaatjesProjectV2.Models.MemberViewModels.Match", b =>
+                {
+                    b.Property<int>("MatchId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<int?>("ElderlyId");
+
+                    b.Property<int?>("VolunteerId");
+
+                    b.HasKey("MatchId");
+
+                    b.HasIndex("ElderlyId");
+
+                    b.HasIndex("VolunteerId");
+
+                    b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("MaatjesProjectMVC.Models.MemberViewModels.Elderly", b =>
                 {
                     b.HasBaseType("MaatjesProjectMVC.Models.MemberViewModels.Person");
 
@@ -80,9 +122,9 @@ namespace MaatjesProjectV2.Migrations
 
                     b.Property<string>("Department");
 
-                    b.ToTable("ElderlyPerson");
+                    b.ToTable("Elderly");
 
-                    b.HasDiscriminator().HasValue("ElderlyPerson");
+                    b.HasDiscriminator().HasValue("Elderly");
                 });
 
             modelBuilder.Entity("MaatjesProjectMVC.Models.MemberViewModels.Volunteer", b =>
@@ -106,6 +148,29 @@ namespace MaatjesProjectV2.Migrations
                         .WithMany("PersonInterests")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MaatjesProjectV2.Models.Matches.Comment", b =>
+                {
+                    b.HasOne("MaatjesProjectV2.Models.MemberViewModels.Match", "Match")
+                        .WithMany("Comments")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MaatjesProjectMVC.Models.MemberViewModels.Person", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerPersonId");
+                });
+
+            modelBuilder.Entity("MaatjesProjectV2.Models.MemberViewModels.Match", b =>
+                {
+                    b.HasOne("MaatjesProjectMVC.Models.MemberViewModels.Elderly", "Elderly")
+                        .WithMany("Matches")
+                        .HasForeignKey("ElderlyId");
+
+                    b.HasOne("MaatjesProjectMVC.Models.MemberViewModels.Volunteer", "Volunteer")
+                        .WithMany("Matches")
+                        .HasForeignKey("VolunteerId");
                 });
 #pragma warning restore 612, 618
         }

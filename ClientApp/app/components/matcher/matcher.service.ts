@@ -11,29 +11,29 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 
-import { ElderlyPerson } from "../../models/elderlypeople.model";
+import { Match } from "../../models/match.model";
 
 @Injectable()
-export class ElderlyPersonsService {
-    private url: string = "api/elderlypeople";
+export class MatcherService {
+    private url: string = "api/matches";
 
     constructor(private http: Http) { }
 
-    getElderlyPersons(): Observable<ElderlyPerson[]> {
+    getMatches(): Observable<any[]> {
         return this.http
             .get(this.url)
             .map(res => res.json())
             .catch(this.handleError);
     }
 
-    getElderlyPerson(id: number): Observable<ElderlyPerson> {
+    getMatch(id: number): Observable<Match> {
         return this.http
             .get(this.getPersonUrl(id))
             .map(res => res.json())
             .catch(this.handleError);
     }
 
-    addElderlyPerson(person: any): Observable<any> {
+    addMatch(person: any): Observable<any> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -43,7 +43,7 @@ export class ElderlyPersonsService {
             .catch(this.handleError);
     }
 
-    updateElderlyPerson(person: any) {
+    updateMatch(person: any) {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -53,7 +53,7 @@ export class ElderlyPersonsService {
             .catch(this.handleError);
     }
 
-    deleteElderlyPerson(id: number) {
+    deleteMatch(id: number) {
         return this.http
             .delete(this.getPersonUrl(id))
             .map(res => res.json())

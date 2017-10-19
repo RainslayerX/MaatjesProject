@@ -11,33 +11,33 @@ using MaatjesProjectV2.Data;
 namespace MaatjesProjectV2.Controllers
 {
     [Produces("application/json")]
-    [Route("api/ElderlyPersons")]
-    public class ElderlyPersonsController : Controller
+    [Route("api/ElderlyPeople")]
+    public class ElderlyPeopleController : Controller
     {
         private readonly ProjectContext _context;
 
-        public ElderlyPersonsController(ProjectContext context)
+        public ElderlyPeopleController(ProjectContext context)
         {
             _context = context;
         }
 
-        // GET: api/ElderlyPersons
+        // GET: api/ElderlyPeople
         [HttpGet]
-        public IEnumerable<ElderlyPerson> GetElderlyPersons()
+        public IEnumerable<Elderly> GetElderlyPeople()
         {
-            return _context.ElderlyPersons;
+            return _context.ElderlyPeople;
         }
 
-        // GET: api/ElderlyPersons/5
+        // GET: api/ElderlyPeople/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetElderlyPerson([FromRoute] int id)
+        public async Task<IActionResult> GetElderly([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var elderlyPerson = await _context.ElderlyPersons.SingleOrDefaultAsync(m => m.PersonId == id);
+            var elderlyPerson = await _context.ElderlyPeople.SingleOrDefaultAsync(m => m.PersonId == id);
 
             if (elderlyPerson == null)
             {
@@ -47,9 +47,9 @@ namespace MaatjesProjectV2.Controllers
             return Ok(elderlyPerson);
         }
 
-        // PUT: api/ElderlyPersons/5
+        // PUT: api/ElderlyPeople/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutElderlyPerson([FromRoute] int id, [FromBody] ElderlyPerson elderlyPerson)
+        public async Task<IActionResult> PutElderly([FromRoute] int id, [FromBody] Elderly elderlyPerson)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace MaatjesProjectV2.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ElderlyPersonExists(id))
+                if (!ElderlyExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,51 @@ namespace MaatjesProjectV2.Controllers
             return NoContent();
         }
 
-        // POST: api/ElderlyPersons
+        // POST: api/ElderlyPeople
         [HttpPost]
-        public async Task<IActionResult> PostElderlyPerson([FromBody] ElderlyPerson elderlyPerson)
+        public async Task<IActionResult> PostElderly([FromBody] Elderly elderlyPerson)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.ElderlyPersons.Add(elderlyPerson);
+            _context.ElderlyPeople.Add(elderlyPerson);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetElderlyPerson", new { id = elderlyPerson.PersonId }, elderlyPerson);
+            return CreatedAtAction("GetElderly", new { id = elderlyPerson.PersonId }, elderlyPerson);
         }
 
-        // DELETE: api/ElderlyPersons/5
+        // DELETE: api/ElderlyPeople/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteElderlyPerson([FromRoute] int id)
+        public async Task<IActionResult> DeleteElderly([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var elderlyPerson = await _context.ElderlyPersons.SingleOrDefaultAsync(m => m.PersonId == id);
+            var elderlyPerson = await _context.ElderlyPeople.SingleOrDefaultAsync(m => m.PersonId == id);
             if (elderlyPerson == null)
             {
                 return NotFound();
             }
 
-            _context.ElderlyPersons.Remove(elderlyPerson);
+            _context.ElderlyPeople.Remove(elderlyPerson);
             await _context.SaveChangesAsync();
 
             return Ok(elderlyPerson);
         }
 
-        private bool ElderlyPersonExists(int id)
+        private bool ElderlyExists(int id)
         {
-            return _context.ElderlyPersons.Any(e => e.PersonId == id);
+            return _context.ElderlyPeople.Any(e => e.PersonId == id);
+        }
+
+        [HttpGet("available")]
+        public IEnumerable<Elderly> GetAvailableElderlyPeople()
+        {
+            return _context.ElderlyPeople.Where(x => x.Matches.Count == 0).ToList();
         }
     }
 }

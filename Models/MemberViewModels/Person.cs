@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaatjesProjectV2.Models.MemberViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,5 +28,6 @@ namespace MaatjesProjectMVC.Models.MemberViewModels
         public bool Dementing { get; set; }
 
         public List<PersonInterest> PersonInterests { get; set; }
+        public List<Match> Matches { get; set; }
     }
 }

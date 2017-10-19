@@ -122,5 +122,11 @@ namespace MaatjesProjectV2.Controllers
         {
             return _context.Volunteers.Any(e => e.PersonId == id);
         }
+
+        [HttpGet("available")]
+        public IEnumerable<Volunteer> GetAvailableVolunteers()
+        {
+            return _context.Volunteers.Where(x => x.Matches.Count == 0).ToList();
+        }
     }
 }
