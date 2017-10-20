@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MaatjesProjectMVC.Models.MemberViewModels;
 using Microsoft.EntityFrameworkCore;
-using MaatjesProjectV2.Data;
+using MaatjesProject.Data;
 
 namespace MaatjesProjectMVC.Controllers
 {

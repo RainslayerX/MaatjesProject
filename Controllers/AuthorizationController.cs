@@ -8,7 +8,7 @@ using OpenIddict.Models;
 using OpenIddict.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using MaatjesProjectV2.Models.MemberViewModels;
+using MaatjesProject.Models.MemberViewModels;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ using AspNet.Security.OpenIdConnect.Server;
 using Microsoft.AspNetCore.Authentication;
 using AspNet.Security.OpenIdConnect.Extensions;
 
-namespace MaatjesProjectV2.Controllers
+namespace MaatjesProject.Controllers
 {
     public class AuthorizationController : Controller
     {

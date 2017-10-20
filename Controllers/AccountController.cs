@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using MaatjesProjectV2.Data;
-using MaatjesProjectV2.Models.MemberViewModels;
+using MaatjesProject.Data;
+using MaatjesProject.Models.MemberViewModels;
 using Microsoft.AspNetCore.Authorization;
-using MaatjesProjectV2.ViewModels;
+using MaatjesProject.ViewModels;
 
-namespace MaatjesProjectV2.Controllers
+namespace MaatjesProject.Controllers
 {
     [Authorize]
     [Route("api/account")]

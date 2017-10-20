@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MaatjesProjectV2.Migrations
+namespace MaatjesProject.Migrations
 {
     public partial class init2 : Migration
     {

@@ -1,6 +1,6 @@
 ﻿using MaatjesProjectMVC.Models.MemberViewModels;
-using MaatjesProjectV2.Models.Matches;
-using MaatjesProjectV2.Models.MemberViewModels;
+using MaatjesProject.Models.Matches;
+using MaatjesProject.Models.MemberViewModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MaatjesProjectV2.Data
+namespace MaatjesProject.Data
 {
     public class ProjectContext : IdentityDbContext<ApplicationUser>
     {

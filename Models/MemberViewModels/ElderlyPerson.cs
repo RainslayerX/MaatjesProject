@@ -1,4 +1,4 @@
-﻿using MaatjesProjectV2.Models.MemberViewModels;
+﻿using MaatjesProject.Models.MemberViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

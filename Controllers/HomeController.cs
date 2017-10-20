@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MaatjesProjectV2.Controllers
+namespace MaatjesProject.Controllers
 {
     public class HomeController : Controller
     {

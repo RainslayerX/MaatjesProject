@@ -1,11 +1,11 @@
 ﻿using MaatjesProjectMVC.Models.MemberViewModels;
-using MaatjesProjectV2.Models.Matches;
+using MaatjesProject.Models.Matches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MaatjesProjectV2.Models.MemberViewModels
+namespace MaatjesProject.Models.MemberViewModels
 {
     public class Match
     {

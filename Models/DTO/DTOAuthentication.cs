@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MaatjesProjectV2.Models.DTO
+namespace MaatjesProject.Models.DTO
 {
     public class DTOAuthentication
     {

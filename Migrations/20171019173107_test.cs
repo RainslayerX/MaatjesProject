@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace MaatjesProjectV2.Migrations
+namespace MaatjesProject.Migrations
 {
     public partial class test : Migration
     {

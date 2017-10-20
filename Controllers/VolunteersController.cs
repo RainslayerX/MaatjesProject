@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MaatjesProjectMVC.Models.MemberViewModels;
-using MaatjesProjectV2.Data;
+using MaatjesProject.Data;
 
-namespace MaatjesProjectV2.Controllers
+namespace MaatjesProject.Controllers
 {
     [Produces("application/json")]
     [Route("api/Volunteers")]

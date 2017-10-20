@@ -7,19 +7,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MaatjesProjectV2.Data;
+using MaatjesProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using MaatjesProjectV2.Models.MemberViewModels;
+using MaatjesProject.Models.MemberViewModels;
 using Microsoft.AspNetCore.Identity;
 using OpenIddict.Core;
 using System.Threading;
 using OpenIddict.Models;
 using AspNet.Security.OpenIdConnect.Primitives;
 
-namespace MaatjesProjectV2
+namespace MaatjesProject
 {
     public class Startup
     {
