@@ -1,0 +1,12 @@
+﻿<div class="d-flex" style="min-height:100vh;">
+    <div class="card align-self-center mx-auto">
+        <div class="card-body">
+            <input type="email" [(ngModel)]="email" placeholder="Email" />
+            <input type="password" [(ngModel)]="password" placeholder="Wachtwoord" />
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary" (click)="login()">Log in</button>
+            <button class="btn btn-primary" (click)="register()">Registreer</button>
+        </div>
+    </div>
+</div>

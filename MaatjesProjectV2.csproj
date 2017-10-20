@@ -38,11 +38,16 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\elderlypersons\home.component.ts" />
+    <None Remove="ClientApp\app\components\security\auth-guard.service.ts" />
+    <None Remove="ClientApp\app\components\security\OpenIdDictToken.ts" />
     <None Remove="ClientApp\app\models\person.model.ts" />
     <None Remove="ClientApp\app\models\volunteer.model.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\security\auth-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\security\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\security\OpenIdDictToken.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\person.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\volunteer.model.ts" />
   </ItemGroup>

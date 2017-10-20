@@ -1,5 +1,9 @@
+<div class="navbar-extended-background" [ngClass]="{ 'loggedin': isLoggedIn() }"></div>
 
-<nav-menu></nav-menu>
-<div class='container pt-4'>
+<div *ngIf="isLoggedIn()">
+    <nav-menu></nav-menu>
+</div>
+
+<div [ngClass]="{ 'container pt-4': isLoggedIn() }">
     <router-outlet></router-outlet>
 </div>

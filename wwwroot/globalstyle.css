@@ -4,8 +4,24 @@
 }
 
 router-outlet {
-    width: 100%;    
+    width: 100%;
 }
+
+.navbar-extended-background {
+    /*z-index: -1;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: #5C6BC0;
+    height: 40vh;
+    -webkit-transition: height 1s;
+}
+
+    .navbar-extended-background.loggedin {
+        height: 184px;
+    }
 
 .card {
     border: none !important;
