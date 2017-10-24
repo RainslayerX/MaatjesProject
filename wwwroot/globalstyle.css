@@ -76,7 +76,7 @@ p, li {
 }
 
 .navbar {
-    height: 72px;
+    min-height: 72px;
 }
 
 .table {
