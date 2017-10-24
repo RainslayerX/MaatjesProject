@@ -33,10 +33,9 @@ namespace MaatjesProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=MaatjesProject;Trusted_Connection=True;";
             services.AddDbContext<ProjectContext>(options =>
             {
-                options.UseSqlServer(connection);
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 options.UseOpenIddict<Guid>();
             });
 

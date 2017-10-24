@@ -25,6 +25,7 @@ export class MatcherComponent implements OnInit {
     targetType: string = '';
     targetPerson: Person;
     targetMatch: any = null;
+    errorMessage: string;
 
     @ViewChild('formModal') formModal: ModalDirective;
 

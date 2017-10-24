@@ -1,12 +1,22 @@
 ﻿<div class="d-flex" style="min-height:100vh;">
-    <div class="card align-self-center mx-auto">
-        <div class="card-body">
-            <input type="email" [(ngModel)]="email" placeholder="Email" />
-            <input type="password" [(ngModel)]="password" placeholder="Wachtwoord" />
+    <div class="card align-self-center mx-auto col-12 col-sm-9 col-md-6 col-lg-4 p-0">
+        <div class="card-header p-4">
+            <h3>Login | Maatjesproject</h3>
+            <p>Vul uw email en wachtwoord in om in te loggen</p>
         </div>
-        <div class="card-footer">
-            <button class="btn btn-primary" (click)="login()">Log in</button>
-            <button class="btn btn-primary" (click)="register()">Registreer</button>
+        <div class="card-body p-4">
+            <div class="input-group mb-3">
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+                <input type="email" class="form-control" [(ngModel)]="email" placeholder="Email">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
+                <input type="password" class="form-control" [(ngModel)]="password" placeholder="Wachtwoord">
+            </div>
+        </div>
+        <div class="card-footer p-4">
+            <button class="btn btn-primary w-100" (click)="login()">Log in</button>
+            <!--<button class="btn btn-primary" (click)="register()">Registreer</button>-->
         </div>
     </div>
 </div>

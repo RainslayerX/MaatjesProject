@@ -5,7 +5,7 @@
                 <h2 class="m-0">Ouderen</h2>
                 <p>
                     {{elderlyPersons.length}} Ouderen
-                    <button type="button" class="m-2 btn btn-link p-0" (click)="openCreateModal(formModalTemplate)">Voeg Oudere toe</button>
+                    <button type="button" class="m-2 btn btn-link p-0" (click)="openCreateModal(formModal)">Voeg Oudere toe</button>
                 </p>
             </div>
             <table class="table table-hover table-responsive">
@@ -28,7 +28,7 @@
                         <td>{{ person.department }}</td>
 
                         <td>
-                            <button (click)="openDetailsModal(formModalTemplate, person)">
+                            <button (click)="openDetailsModal(formModal, person)">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
                         </td>
