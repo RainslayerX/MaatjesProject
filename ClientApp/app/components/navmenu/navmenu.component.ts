@@ -9,19 +9,25 @@ import { Http } from "@angular/http";
     styleUrls: ['./navmenu.component.css']
 })
 export class NavMenuComponent implements OnInit {
-    user = { name: "USER", role: "ADMIN" };
+    user = this.authService.user.email;
 
     constructor(private authService: AuthService, private http: Http, private router: Router) { }
 
     ngOnInit(): void {
-
+        //this.user.name = this.authService.user.email;
     }
 
     logout(): void {
-        this.http.post('api/account/loggoff', { headers: this.authService.contentHeaders() })
+        this.http.get('connect/logout', { headers: this.authService.authJsonHeaders() })
             .subscribe(response => {
                 this.authService.logout();
                 this.router.navigate(['login']);
-            });
+            },
+            error => {
+                // failed; TODO: add some nice toast / error handling
+                alert(error.text());
+                console.log(error.text());
+            }
+            );
     }
 }

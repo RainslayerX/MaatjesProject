@@ -1,12 +1,14 @@
 ﻿import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 import { OpenIdDictToken } from './OpenIdDictToken'
 
 @Injectable()
 export class AuthService {
+    public isLoggedIn: boolean = false;
+    public user: User = new User();
 
-    constructor() { }
+    constructor(private http: Http) { }
 
     // for requesting secure data using json
     authJsonHeaders() {
@@ -51,11 +53,14 @@ export class AuthService {
         sessionStorage.setItem('bearer_token', access_token);
         // TODO: implement meaningful refresh, handle expiry 
         sessionStorage.setItem('expires_in', expires_in.toString());
+
+        this.isLoggedIn = true;
     }
 
     // called when logging out user; clears tokens from browser
     logout() {
         //localStorage.removeItem('access_token');
+        this.isLoggedIn = false;
         sessionStorage.removeItem('access_token');
         sessionStorage.removeItem('bearer_token');
         sessionStorage.removeItem('expires_in');
@@ -65,6 +70,18 @@ export class AuthService {
     // simple check of logged in status: if there is a token, we're (probably) logged in.
     // ideally we check status and check token has not expired (server will back us up, if this not done, but it could be cleaner)
     loggedIn() {
-        return sessionStorage.getItem('bearer_token') != null;
+        this.isLoggedIn = sessionStorage.getItem('bearer_token') != null;
+
+        if (this.loggedIn && this.user.email === undefined)
+            this.http.get('api/userinfo', { headers: this.authJsonHeaders() })
+                .subscribe(x => { console.log(x.json()); this.user = x.json() });
+
+        return this.isLoggedIn;
     }
+}
+
+export class User {
+    email: string;
+    roles: string[];
+    sub: string;
 }

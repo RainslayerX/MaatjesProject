@@ -9,8 +9,7 @@ import { Router } from "@angular/router";
     styleUrls: ['./login.component.css']
 })
 /** login component*/
-export class LoginComponent implements OnInit
-{
+export class LoginComponent implements OnInit {
     email: string;
     password: string;
 
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit
             .subscribe(response => {
                 // success, save the token to session storage
                 this.authService.login(response.json());
-                this.router.navigate(['about']);
+                this.router.navigate(['home']);
             },
             error => {
                 // failed
