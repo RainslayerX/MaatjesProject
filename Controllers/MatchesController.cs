@@ -46,7 +46,7 @@ namespace MaatjesProject.Controllers
                 return BadRequest(ModelState);
             }
 
-            var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == id);
+            var match = await _context.Matches.Where(m => m.MatchId == id).Include(x => x.Elderly).Include(y => y.Volunteer).SingleAsync();                
 
             if (match == null)
             {

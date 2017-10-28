@@ -7,13 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace MaatjesProject.Data
 {
-    public class ProjectContext : IdentityDbContext<ApplicationUser>
+    public class ProjectContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
-        public ProjectContext(DbContextOptions<ProjectContext> options)
-            : base(options)
+        public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
         { }
 
         public DbSet<Person> People { get; set; }

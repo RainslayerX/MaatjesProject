@@ -100,7 +100,7 @@ namespace MaatjesProject
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -131,6 +131,7 @@ namespace MaatjesProject
             });
 
             //InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
+            await InitializeRolesAndAdmin(app);
         }
 
         private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
@@ -176,6 +177,52 @@ namespace MaatjesProject
                     };
 
                     await manager.CreateAsync(descriptor, cancellationToken);
+                }
+            }
+        }
+
+        private async Task InitializeRolesAndAdmin(IApplicationBuilder app)
+        {
+            IServiceScopeFactory scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+
+            using (IServiceScope scope = scopeFactory.CreateScope())
+            {
+                //adding customs roles : Question 1
+                var RoleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var UserManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                string[] roleNames = { "Admin", "Volunteer" };
+                IdentityResult roleResult;
+
+                foreach (var roleName in roleNames)
+                {
+                    var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                    if (!roleExist)
+                    {
+                        //create the roles and seed them to the database: Question 2
+                        roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                    }
+                }
+
+                //Here you could create a super user who will maintain the web app
+                var poweruser = new ApplicationUser
+                {
+                    Email = Configuration["AppSettings:UserEmail"],
+                    UserName = Configuration["AppSettings:UserEmail"]
+                };
+
+                string userPWD = Configuration["AppSettings:UserPassword"];
+                var _user = await UserManager.FindByEmailAsync(Configuration["AppSettings:UserEmail"]);
+
+                if (_user == null)
+                {
+                    var createPowerUser = await UserManager.CreateAsync(poweruser, userPWD);
+                    if (createPowerUser.Succeeded)
+                    {
+                        //here we tie the new user to the role : Question 3
+                        await UserManager.AddToRoleAsync(poweruser, "Admin");
+
+                    }
                 }
             }
         }

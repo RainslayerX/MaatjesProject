@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-12 col-md-9 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-0">Gebruikers</h2>
+                <p>
+                    {{users.length}} Gebruikers
+                    <button type="button" class="m-2 btn btn-link p-0" (click)="openCreateModal(formModal)">Voeg Gebruiker toe</button>
+                </p>
+            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.roles }}</td>
+
+                        <td>
+                            <button (click)="openDetailsModal(formModal, user)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div bsModal #formModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="card modal-dialog" role="document">
+        <div class="row m-0">
+            <div class="col-12 p-0">
+                <div class="modal-header">
+                    <h4 class="m-0 align-bottom">Details Gebruiker</h4>
+                </div>
+
+                <div class="modal-body pb-0">
+                    <h5 class="mb-2">{{isCreating ? '' : 'Email Wijzigen'}}</h5>
+                    <div class="form-group row" *ngIf="!isCreating">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Huidig Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" readonly class="form-control-plaintext w-100" [(ngModel)]="currentUser.email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-3 col-form-label">Nieuw Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" placeholder="naam@voorbeeld.nl" [(ngModel)]="inputEmail">
+                        </div>
+                    </div>
+                    <div *ngIf="!isCreating">
+                        <button class="btn w-100">Email Wijzigen</button>
+                        <h5 class="mt-3">Rol Wijzigen</h5>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-3 col-form-label">Rol</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" ([ngModel])="inputRole">
+                                <option value="">Gebruiker</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="!isCreating">
+                        <button class="btn w-100 mb-3">Wijzig Rol</button>
+                        <h5 class="mb-2">Wachtwoord Resetten</h5>
+                        <button class="btn w-100 mb-3">Reset Wachtwoord van {{currentUser.email}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div *ngIf="errorMessage" class="p-3 mb-2 bg-danger text-white">
+                Er is iets fout gegaan!
+                {{errorMessage}}
+            </div>
+            <button type="button" *ngIf="!isCreating && currentUser.email != authService.user.email" class="m-2 btn btn-link p-0" (click)="deletePerson(deletePromptModalTemplate, currentUser)">{{inputEmail}} verwijderen</button>
+            <div *ngIf="inputEmail == authService.user.email && !isCreating">U kunt uw eigen account niet verwijderen</div>
+            <button type="button" (click)="formModal.hide()" class="btn btn-default">Sluiten</button>
+            <button class="btn btn-primary" *ngIf="isCreating" (click)="createUser()">Gebruiker Aanmaken</button>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #deletePromptModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{deleteModalContent.title}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{deleteModalContent.bodyText}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="deleteModalContent.okAction()">Ja</button>
+        <button type="button" class="btn btn-primary" (click)="deleteModal.hide()">Nee</button>
+    </div>
+</ng-template>

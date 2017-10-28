@@ -52,6 +52,7 @@
     <TypeScriptCompile Include="ClientApp\app\components\security\auth.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\security\OpenIdDictToken.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\person.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\user.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\volunteer.model.ts" />
   </ItemGroup>
 

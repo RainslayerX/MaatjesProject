@@ -5,8 +5,8 @@ import { ElderlyPerson } from "./elderlypeople.model";
 export class Match {
     matchId: number;
     dateCreated: Date;
-    volunteer: Person;
-    elderlyPerson: Person;
+    volunteer: Person = new Volunteer();
+    elderlyPerson: Person = new ElderlyPerson();
 } 
 
 export class MatchDTO {

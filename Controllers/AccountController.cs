@@ -9,10 +9,11 @@ using MaatjesProject.Data;
 using MaatjesProject.Models.MemberViewModels;
 using Microsoft.AspNetCore.Authorization;
 using MaatjesProject.ViewModels;
+using AspNet.Security.OAuth.Validation;
 
 namespace MaatjesProject.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
     [Route("api/account")]
     [Produces("application/json")]
     public class AccountController : Controller
@@ -30,6 +31,14 @@ namespace MaatjesProject.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationDbContext = applicationDbContext;
+        }
+
+        [HttpGet("users")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]//Temporary, Authorize doesn't work
+        public IEnumerable<object> GetUsers()
+        {
+            return _applicationDbContext.Users.ToList().Select(x => new { x.Email, Roles = _userManager.GetRolesAsync(x).GetAwaiter().GetResult() }).ToList();
         }
 
         //
@@ -60,7 +69,6 @@ namespace MaatjesProject.Controllers
         //
         // POST: /Account/Register
         [HttpPost("register")]
-        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
         {
             EnsureDatabaseCreated(_applicationDbContext);
@@ -81,6 +89,20 @@ namespace MaatjesProject.Controllers
 
             // If we got this far, something failed, redisplay form
             return BadRequest();
+        }
+
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> DeleteUser(string email)
+        {
+            try
+            {
+                await _userManager.DeleteAsync(await _userManager.FindByEmailAsync(email));
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest("Fout opgetreden bij het verwijderen van gebruiker: " + email);
+            }
         }
 
         //
@@ -116,7 +138,7 @@ namespace MaatjesProject.Controllers
             }
             return BadRequest();
         }
-        
+
         #region Helpers
 
         // The following code creates the database and schema if they don't exist.

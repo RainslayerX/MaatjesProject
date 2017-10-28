@@ -33,6 +33,12 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" [routerLink]="['/usersettings']">Instellingen</a>
                         <a class="dropdown-item" (click)="logout()">Uitloggen</a>
+
+                        <div *ngIf="authService.user.roles.includes('Admin')">
+                            <h6 class="pt-2">Beheer</h6>
+
+                            <a class="dropdown-item" [routerLink]="['/admin/usermanagement']">Gebruiker Beheer</a>
+                        </div>
                     </div>
                 </li>
             </ul>

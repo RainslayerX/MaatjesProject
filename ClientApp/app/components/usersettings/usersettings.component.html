@@ -9,15 +9,15 @@
 </div>
 
 <div class="row">
-    <div class="col-11 col-md-6 mx-auto">
+    <div class="col-12 col-sm-11 col-md-8 col-lg-6 mx-auto">
         <div class="card">
             <div class="card-header">
                 <h4 class="m-0">Wachtwoord Wijzigen</h4></div>
             <div class="card-body">
-                <!--<div class="input-group mb-3">
+                <div class="input-group mb-3">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
-                    <input type="email" class="form-control disabled" [(ngModel)]="email" placeholder="Email">
-                </div>-->
+                    <input type="email" class="form-control" readonly [(ngModel)]="email" placeholder="Email">
+                </div>
                 <div class="input-group mb-3">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
                     <input type="password" class="form-control" [(ngModel)]="password" placeholder="Wachtwoord">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn btn-primary pull-right">Wachtwoord Wijzigen</button>
+                <button class="btn btn-primary pull-right" disabled>Wachtwoord Wijzigen</button>
             </div>
         </div>
     </div>

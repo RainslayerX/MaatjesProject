@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { OpenIdDictToken } from './OpenIdDictToken'
+import { User } from "../../models/user";
 
 @Injectable()
 export class AuthService {
@@ -72,16 +73,10 @@ export class AuthService {
     loggedIn() {
         this.isLoggedIn = sessionStorage.getItem('bearer_token') != null;
 
-        if (this.loggedIn && this.user.email === undefined)
+        if (this.loggedIn && this.user.sub == "")
             this.http.get('api/userinfo', { headers: this.authJsonHeaders() })
                 .subscribe(x => { console.log(x.json()); this.user = x.json() });
 
         return this.isLoggedIn;
     }
-}
-
-export class User {
-    email: string;
-    roles: string[];
-    sub: string;
 }
