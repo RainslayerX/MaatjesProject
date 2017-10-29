@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col col-md-6 mx-md-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-0">Interesses</h2>
+                <p>
+                    {{interests.length}} Interesses
+                    <button type="button" class="m-2 btn btn-link p-0" (click)="openCreateModal(formModal)">Maak interesse aan</button>
+                </p>
+            </div>
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Tekst</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let interest of interests">
+                        <td class="w-100">{{ interest.name }}</td>
+
+                        <td>
+                            <button class="btn btn-outline-primary" (click)="openDetailsModal(formModal, interest)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" (click)="deleteInterest(deletePromptModalTemplate, interest)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div bsModal #formModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="card modal-dialog" role="document">
+        <div class="row m-0">
+            <div class="col-12 p-0">
+                <div class="modal-header">
+                    <h4 class="m-0 align-bottom">{{formTitle}}</h4>
+                </div>
+                <div class="modal-body pb-0">
+                    <div class="input-group mb-3">
+                        <div class="input-group-addon"><i class="fa fa-file-text mx-auto" aria-hidden="true"></i></div>
+                        <input type="text" class="form-control" placeholder="Tekst" [(ngModel)]="selectedInterest.name">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div *ngIf="errorMessage" class="p-3 mb-2 bg-danger text-white">
+                Er is iets fout gegaan!
+                {{errorMessage}}
+            </div>
+            <button type="button" (click)="formModal.hide()" class="btn btn-default">Sluiten</button>
+            <button type="submit" (click)="isCreating ? createInterest() : updateInterest()" class="btn btn-primary">{{isCreating ? "Aanmaken" : "Wijzigingen Opslaan"}}</button>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #deletePromptModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{deleteModalContent.title}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{deleteModalContent.bodyText}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="deleteModalContent.okAction()">Ja</button>
+        <button type="button" class="btn btn-primary" (click)="deleteModal.hide()">Nee</button>
+    </div>
+</ng-template>

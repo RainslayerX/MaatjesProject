@@ -15,6 +15,7 @@ import 'rxjs/add/operator/do';
 import * as $ from "jquery";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { Interest } from "../../models/interest.model";
 
 @Component({
     selector: 'personinterests',
@@ -89,9 +90,4 @@ export class PersonInterestsComponent {
         //this.loaderService.displayLoader(false);
         return Observable.throw(errMsg);
     }
-}
-
-export class Interest {
-    interestId: number;
-    name: string;
 }

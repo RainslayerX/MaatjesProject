@@ -20,6 +20,7 @@ import { AuthService } from "./components/security/auth.service";
 import { LoginComponent } from "./components/login/login.component";
 import { UserSettingsComponent } from "./components/usersettings/usersettings.component";
 import { UserManagementComponent } from "./components/admin/usermanagement/usermanagement.component";
+import { InterestsComponent } from "./components/admin/interests/interests.component";
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { UserManagementComponent } from "./components/admin/usermanagement/userm
         LoginComponent,
         UserSettingsComponent,
         UserManagementComponent,
-        MatchDetailsComponent
+        MatchDetailsComponent,
+        InterestsComponent
     ],
     imports: [
         CommonModule,
@@ -50,6 +52,7 @@ import { UserManagementComponent } from "./components/admin/usermanagement/userm
             { path: 'matcher/details/:id', component: MatchDetailsComponent, canActivate: [AuthGuard] },
             { path: 'usersettings', component: UserSettingsComponent, canActivate: [AuthGuard] },
             { path: 'admin/usermanagement', component: UserManagementComponent, canActivate: [AuthGuard] },
+            { path: 'admin/interests', component: InterestsComponent, canActivate: [AuthGuard] },
             { path: '**', redirectTo: 'home' }
         ]),
         ModalModule.forRoot()

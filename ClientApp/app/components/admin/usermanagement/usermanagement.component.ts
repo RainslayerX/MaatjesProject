@@ -21,6 +21,8 @@ export class UserManagementComponent implements OnInit {
     inputEmail: string = "";
     inputRole: string = "";
 
+    errorMessage: string;
+
     @ViewChild('formModal') formModal: ModalDirective;
 
     public deleteModal: BsModalRef;
@@ -32,7 +34,7 @@ export class UserManagementComponent implements OnInit {
     };
     public deleteModalContent: any = {};
 
-    constructor(private http: Http, private authService: AuthService, private modalService: BsModalService) { }
+    constructor(private http: Http, public authService: AuthService, private modalService: BsModalService) { }
 
     ngOnInit(): void {
         this.getUsers();

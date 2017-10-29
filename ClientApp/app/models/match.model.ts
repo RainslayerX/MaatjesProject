@@ -6,7 +6,7 @@ export class Match {
     matchId: number;
     dateCreated: Date;
     volunteer: Person = new Volunteer();
-    elderlyPerson: Person = new ElderlyPerson();
+    elderly: Person = new ElderlyPerson();
 } 
 
 export class MatchDTO {
