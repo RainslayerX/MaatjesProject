@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Newtonsoft.Json.Linq;
 using OpenIddict.Core;
+using Newtonsoft.Json;
 
 namespace MaatjesProject.Controllers
 {
@@ -20,10 +21,12 @@ namespace MaatjesProject.Controllers
     public class UserInfoController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ProjectContext _context;
 
-        public UserInfoController(UserManager<ApplicationUser> userManager)
+        public UserInfoController(UserManager<ApplicationUser> userManager, ProjectContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         //
@@ -45,12 +48,10 @@ namespace MaatjesProject.Controllers
             var claims = new JObject();
 
             // Note: the "sub" claim is a mandatory claim and must be included in the JSON response.
-            claims[OpenIdConnectConstants.Claims.Subject] = await _userManager.GetUserIdAsync(user);
-            claims[OpenIdConnectConstants.Claims.Email] = await _userManager.GetEmailAsync(user);
+            claims[OpenIdConnectConstants.Claims.Subject] = user.Id;
+            claims[OpenIdConnectConstants.Claims.Email] = user.Email;
             claims[OpenIddictConstants.Claims.Roles] = JArray.FromObject(await _userManager.GetRolesAsync(user));
-
-            // Note: the complete list of standard claims supported by the OpenID Connect specification
-            // can be found here: http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+            claims["person"] = JsonConvert.SerializeObject(await _context.People.Where(x => x.Email == user.Email).SingleAsync());
 
             return Json(claims);
         }

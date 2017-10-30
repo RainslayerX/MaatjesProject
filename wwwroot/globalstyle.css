@@ -143,6 +143,14 @@ ul {
     background-color: #F5F5F5;
 }
 
+.darker-bg .modal-footer {
+    border-top-color: lightgray;
+}
+
+.darker-bg .modal-header {
+    border-bottom-color: lightgray;
+}
+
 li .btn {
     font-size: 18px;
     padding: 0.2rem 0.5rem;

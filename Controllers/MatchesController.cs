@@ -55,6 +55,24 @@ namespace MaatjesProject.Controllers
 
             return Ok(match);
         }
+        
+        [HttpGet("comments/{id}")]
+        public async Task<IActionResult> GetMatchComments([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var match = await _context.Matches.Where(m => m.MatchId == id).Include(x => x.Comments).SingleAsync();
+
+            if (match == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(match.Comments);
+        }
 
         // PUT: api/Matches/5
         [HttpPut("{id}")]

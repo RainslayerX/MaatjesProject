@@ -12,6 +12,7 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
+                <button class="btn btn-link text-secondary pull-right p-0" (click)="deleteMatch(deletePromptModalTemplate)">Match Stoppen</button>
                 <h3>Match tussen {{match.elderly.name}} en {{match.volunteer.name}}</h3>
                 <h5 class="m-0">Sinds {{match.dateCreated | date: 'dd/MM/yyyy'}}</h5>
             </div>
@@ -26,15 +27,38 @@
     <div class="col col-md-6">
         <div class="card">
             <div class="card-header">
-                <h4>Reacties</h4>
+                <h4 class="m-0">Reacties</h4>
+            </div>
+            <div>
+                <div *ngFor="let comment of comments" class="border-secondary p-3">
+                    <h4>{{comment.owner?.name}}</h4>
+                    <p>{{comment.text}}</p>
+                    <button class="btn btn-link pull-right">Reactie Verwijderen</button>
+                </div>
             </div>
             <div class="card-body">
                 <div class="form-group">
                     <h5>Nieuwe Reactie</h5>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" rows="3" [(ngModel)]="commentText"></textarea>
                 </div>
-                <button class="btn btn-outline-primary pull-right">Verstuur</button>
+                <button class="btn btn-outline-primary pull-right" (click)="addComment()">Verstuur</button>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #deletePromptModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{deleteModalContent.title}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{deleteModalContent.bodyText}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="deleteModalContent.okAction()">Ja</button>
+        <button type="button" class="btn btn-primary" (click)="deleteModal.hide()">Nee</button>
+    </div>
+</ng-template>
